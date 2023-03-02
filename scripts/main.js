@@ -17,16 +17,22 @@ const displayContent = (contents) => {
               <p class="card-text">
               Features
                     <p>
-                 ${content.features[0] ? content.features[0] : ""}
+                 ${content.features[0] ? `1. ${content.features[0]}` : ""}
                     </p>
                     <p>
-                 ${content.features[1] ? content.features[1] : ""}
+                 ${content.features[1] ? `2. ${content.features[1]}` : ""}
                     </p>
                     <p>
-                 ${content.features[2] ? content.features[2] : ""}
+                 ${content.features[2] ? `3. ${content.features[2]}` : ""}
                     </p>
                     <p>
-                 ${content.features[3] ? content.features[3] : ""}
+                 ${content.features[3] ? `4. ${content.features[3]}` : ""}
+                    </p>
+                    <p>
+                 ${content.features[4] ? `5. ${content.features[4]}` : ""}
+                    </p>
+                    <p>
+                 ${content.features[5] ? `6. ${content.features[5]}` : ""}
                     </p>
               </p>
             </div>
@@ -56,7 +62,7 @@ const loadContentDetails = async (id) => {
   displayContentDetails(data.data);
 };
 const displayContentDetails = (content) => {
-  console.log(content.pricing);
+  console.log(content.features["2"].feature_name);
   const modalBody = document.getElementById("modal-body");
   modalBody.innerHTML = `
             <div
@@ -64,7 +70,7 @@ const displayContentDetails = (content) => {
               >
                 <div class="w-50 bg-info-subtle rounded border border-info p-2">
                   <h3>${content.description}</h3>
-                  <div class="d-flex gap-3">
+                  <div class="d-flex justify-content-between align-items-center gap-1 ">
                     <div>
                       <h5 class="bg-light rounded text-success text-center p-2">
                         ${
@@ -113,9 +119,63 @@ const displayContentDetails = (content) => {
                   >
                     <div>
                       <h5>Features</h5>
+                      <p>
+                 ${
+                   content.features["0"]
+                     ? content.features["0"].feature_name
+                     : ""
+                 }
+                    </p>
+                    <p>
+                 ${
+                   content.features["1"]
+                     ? content.features["1"].feature_name
+                     : ""
+                 }
+                    </p>
+                    <p>
+                 ${
+                   content.features["2"]
+                     ? content.features["2"].feature_name
+                     : ""
+                 }
+                    </p>
+                    <p>
+                 ${
+                   content.features["3"]
+                     ? content.features["3"].feature_name
+                     : ""
+                 }
+                    </p>
+                    <p>
+                 ${
+                   content.features["4"]
+                     ? content.features["4"].feature_name
+                     : ""
+                 }
+                    </p>
+                    <p>
+                 ${
+                   content.features["5"]
+                     ? content.features["5"].feature_name
+                     : ""
+                 }
+                    </p>
                     </div>
                     <div>
                       <h5>Integrations</h5>
+                      <p>
+                 ${content.integrations[0] ? content.integrations[0] : ""}
+                    </p>
+                    <p>
+                 ${content.integrations[1] ? content.integrations[1] : ""}
+                    </p>
+                    <p>
+                 ${content.integrations[2] ? content.integrations[2] : ""}
+                    </p>
+                    <p>
+                 ${content.integrations[3] ? content.integrations[3] : ""}
+                    </p>
                     </div>
                   </div>
                 </div>
@@ -124,11 +184,25 @@ const displayContentDetails = (content) => {
                     <img class="w-100" src="${content.image_link[0]}" alt="" />
                     <span
                       class="badge text-bg-danger position-absolute top-0 end-0"
-                      >Accuracy</span
+                      >${
+                        content.accuracy.score != null
+                          ? `Accuracy ${content.accuracy.score}`
+                          : ""
+                      }</span
                     >
                   </div>
-                  <h5>Question</h5>
-                  <p>ans</p>
+                  <h5>${
+                    content.input_output_examples != null &&
+                    content.input_output_examples[0].input
+                      ? content.input_output_examples[0].input
+                      : "No Result Found"
+                  }</h5>
+                  <p>${
+                    content.input_output_examples != null &&
+                    content.input_output_examples[0].output
+                      ? content.input_output_examples[0].output
+                      : "No Result Found"
+                  }</p>
                 </div>
             </div>
     `;
