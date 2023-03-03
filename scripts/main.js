@@ -1,9 +1,14 @@
+// Loaded Data From API
+
 const loadContent = async () => {
   const url = `https://openapi.programming-hero.com/api/ai/tools`;
   const res = await fetch(url);
   const data = await res.json();
   displayContent(data.data);
 };
+
+// Displayed Data in UI
+
 const displayContent = (contents) => {
   const contentContainer = document.getElementById("content-container");
   contents.tools.forEach((content) => {
@@ -55,12 +60,17 @@ const displayContent = (contents) => {
   });
 };
 
+// Loaded Data of single contents from API by ID
+
 const loadContentDetails = async (id) => {
   const url = `https://openapi.programming-hero.com/api/ai/tool/${id}`;
   const res = await fetch(url);
   const data = await res.json();
   displayContentDetails(data.data);
 };
+
+// Displayed Data of single contents from API by ID
+
 const displayContentDetails = (content) => {
   console.log(content.features["2"].feature_name);
   const modalBody = document.getElementById("modal-body");
@@ -119,7 +129,9 @@ const displayContentDetails = (content) => {
                   >
                     <div>
                       <h5>Features</h5>
-                      <p>
+                      ${
+                        content.features != null
+                          ? `<p>
                  ${
                    content.features["0"]
                      ? content.features["0"].feature_name
@@ -160,10 +172,15 @@ const displayContentDetails = (content) => {
                      ? content.features["5"].feature_name
                      : ""
                  }
-                    </p>
+                    </p>`
+                          : "No Data Found"
+                      }
                     </div>
                     <div>
                       <h5>Integrations</h5>
+                      ${
+                        content.integrations != null
+                          ? `
                       <p>
                  ${content.integrations[0] ? content.integrations[0] : ""}
                     </p>
@@ -176,6 +193,9 @@ const displayContentDetails = (content) => {
                     <p>
                  ${content.integrations[3] ? content.integrations[3] : ""}
                     </p>
+                      `
+                          : "No Data Found"
+                      }
                     </div>
                   </div>
                 </div>
