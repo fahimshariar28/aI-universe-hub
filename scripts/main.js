@@ -1,6 +1,9 @@
 // Loaded Data From API
 
 const loadContent = async (dataLimit) => {
+  // Spinner Added
+  toggleSpinner(true);
+
   const url = `https://openapi.programming-hero.com/api/ai/tools`;
   const res = await fetch(url);
   const data = await res.json();
@@ -20,8 +23,6 @@ const displayContent = (dataLimit, contents) => {
   } else {
     showAll.classList.add("d-none");
   }
-  toggleSpinner(true);
-
   contents.forEach((content) => {
     const contentDiv = document.createElement("div");
     contentDiv.classList.add("col");
