@@ -20,6 +20,7 @@ const displayContent = (dataLimit, contents) => {
   } else {
     showAll.classList.add("d-none");
   }
+  toggleSpinner(true);
 
   contents.forEach((content) => {
     const contentDiv = document.createElement("div");
@@ -68,6 +69,7 @@ const displayContent = (dataLimit, contents) => {
         `;
     contentContainer.appendChild(contentDiv);
   });
+  toggleSpinner(false);
 };
 
 // Loaded Data of single contents from API by ID
