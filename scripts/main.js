@@ -88,7 +88,7 @@ const displayContentDetails = (content) => {
   const modalBody = document.getElementById("modal-body");
   modalBody.innerHTML = `
             <div
-                class="d-flex flex-column-reverse flex-lg-row
+                class="d-flex flex-column-reverse flex-md-row
  justify-content-between align-items-center gap-3"
               >
                 <div class="w-50 bg-info-subtle rounded border border-info p-2">
@@ -138,7 +138,7 @@ const displayContentDetails = (content) => {
                     </div>
                   </div>
                   <div
-                    class="d-flex flex-column flex-lg-row justify-content-between align-items-center"
+                    class="d-flex flex-column flex-md-row justify-content-between align-items-center"
                   >
                     <div>
                       <h5>Features</h5>
