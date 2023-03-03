@@ -1,17 +1,27 @@
 // Loaded Data From API
 
-const loadContent = async () => {
+const loadContent = async (dataLimit) => {
   const url = `https://openapi.programming-hero.com/api/ai/tools`;
   const res = await fetch(url);
   const data = await res.json();
-  displayContent(data.data);
+  displayContent(dataLimit, data.data.tools);
 };
 
 // Displayed Data in UI
 
-const displayContent = (contents) => {
+const displayContent = (dataLimit, contents) => {
   const contentContainer = document.getElementById("content-container");
-  contents.tools.forEach((content) => {
+  contentContainer.innerHTML = "";
+  // Content Slice
+  const showAll = document.getElementById("see-all");
+  if (dataLimit) {
+    contents = contents.slice(0, 6);
+    showAll.classList.remove("d-none");
+  } else {
+    showAll.classList.add("d-none");
+  }
+
+  contents.forEach((content) => {
     const contentDiv = document.createElement("div");
     contentDiv.classList.add("col");
     contentDiv.innerHTML = `
@@ -239,4 +249,12 @@ const toggleSpinner = (isLoading) => {
   }
 };
 
-loadContent();
+// See All Button
+
+const seeAll = document
+  .getElementById("see-all")
+  .addEventListener("click", function () {
+    loadContent();
+  });
+
+loadContent(6);
