@@ -1,27 +1,34 @@
 // Loaded Data From API
 
-const loadContent = async (dataLimit) => {
+const loadContent = async (dataLimit, sort) => {
   // Spinner Added
   toggleSpinner(true);
 
   const url = `https://openapi.programming-hero.com/api/ai/tools`;
   const res = await fetch(url);
   const data = await res.json();
-  displayContent(dataLimit, data.data.tools);
+  displayContent(dataLimit, data.data.tools, sort);
 };
 
 // Displayed Data in UI
 
-const displayContent = (dataLimit, contents) => {
+const displayContent = (dataLimit, contents, sort) => {
   const contentContainer = document.getElementById("content-container");
   contentContainer.innerHTML = "";
   // Content Slice
   const showAll = document.getElementById("see-all");
-  if (dataLimit) {
+  if (!dataLimit) {
     contents = contents.slice(0, 6);
     showAll.classList.remove("d-none");
   } else {
     showAll.classList.add("d-none");
+  }
+  if (sort) {
+    contents.sort(
+      (first, second) =>
+        new Date(first.published_in).getTime() -
+        new Date(second.published_in).getTime()
+    );
   }
   contents.forEach((content) => {
     const contentDiv = document.createElement("div");
@@ -254,25 +261,19 @@ const toggleSpinner = (isLoading) => {
 };
 
 // See All Button
-
+let showAll = false;
+let sort = false;
 const seeAll = document
   .getElementById("see-all")
   .addEventListener("click", function () {
-    loadContent();
+    showAll = true;
+    loadContent(true, sort);
   });
 
 //Sorting by date
 const sortByDate = async () => {
-  toggleSpinner(true);
-  const url = "https://openapi.programming-hero.com/api/ai/tools";
-  const res = await fetch(url);
-  const allTools = await res.json();
-  const allSortedTools = allTools.data.tools.sort(
-    (first, second) =>
-      new Date(first.published_in) - new Date(second.published_in)
-  );
-  console.log(allSortedTools);
-  displayContent(6, allSortedTools);
+  sort = true;
+  loadContent(showAll, true);
 };
 
-loadContent(6);
+loadContent();
