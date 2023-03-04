@@ -261,4 +261,18 @@ const seeAll = document
     loadContent();
   });
 
+//Sorting by date
+const sortByDate = async () => {
+  toggleSpinner(true);
+  const url = "https://openapi.programming-hero.com/api/ai/tools";
+  const res = await fetch(url);
+  const allTools = await res.json();
+  const allSortedTools = allTools.data.tools.sort(
+    (first, second) =>
+      new Date(first.published_in) - new Date(second.published_in)
+  );
+  console.log(allSortedTools);
+  displayContent(6, allSortedTools);
+};
+
 loadContent(6);
